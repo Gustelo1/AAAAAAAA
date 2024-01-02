@@ -5,7 +5,6 @@
 #include "mediana.h"
 #include <sstream>
 #include <algorithm>
-#include "Studentas.h"
 
 
 
