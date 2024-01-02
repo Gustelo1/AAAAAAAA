@@ -1,10 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
 #include "mediana.h"
-#include <sstream>
-#include <algorithm>
+#include "Studentas.h"
 
 
 Studentas::Studentas(std::istream& is) : egzaminas_(0) {
