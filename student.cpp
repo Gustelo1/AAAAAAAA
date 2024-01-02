@@ -6,21 +6,6 @@
 #include <sstream>
 #include <algorithm>
 
-class Studentas {
-private:
-  std::string vardas_;
-  std::string pavarde_;
-  double egzaminas_;
-  std::vector<double> nd_;
-
-public:
-  Studentas() : egzaminas_(0) { }  // default konstruktorius
-  Studentas(std::istream& is);
-  inline std::string vardas() const { return vardas_; }    // get'eriai, inline
-  inline std::string pavarde() const { return pavarde_; }  // get'eriai, inline
-  double galBalas(double (*f) (std::vector<double>) = mediana) const;  // get'eriai
-  std::istream& readStudent(std::istream&);
-};
 
 Studentas::Studentas(std::istream& is) : egzaminas_(0) {
   readStudent(is);
@@ -68,15 +53,11 @@ int main() {
     }
   }
 
-  for (const auto& s : studentai) {
-    std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
-  }
-
   std::cout << "Good students:" << std::endl;
   for (const auto& s : good_students) {
     std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
   }
 
-  file.close(); 
+  file.close(); // Close the file
   return 0;
 }
