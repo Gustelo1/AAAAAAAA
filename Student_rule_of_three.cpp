@@ -5,6 +5,7 @@
 #include "mediana.h"
 #include <sstream>
 #include <algorithm>
+#include <chrono>
 
 class Studentas {
 private:
@@ -73,30 +74,36 @@ std::istream& Studentas::readStudent(std::istream& is) {
 }
 
 int main() {
-  std::ifstream file("students_1000000.txt"); // Open the file
-  if (!file.is_open()) {
-    std::cerr << "Unable to open file students.txt" << std::endl;
-    return 1;
-  }
-
-  std::vector<Studentas> studentai;
-  std::vector<Studentas> good_students;
-  std::string line;
-  while (std::getline(file, line)) {
-    std::istringstream iss(line);
-    Studentas s(iss);
-    if (s.galBalas() > 5) {
-      good_students.push_back(s);
-    } else {
-      studentai.push_back(s);
+    std::ifstream file("students_1000000.txt"); // Open the file
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file students.txt" << std::endl;
+        return 1;
     }
-  }
-
-  for (const auto& s : studentai) {
-    std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
-  }
 
 
-  file.close(); 
-  return 0;
+    auto startReading = std::chrono::high_resolution_clock::now();
+    std::vector<Studentas> studentai;
+    std::vector<Studentas> good_students;
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        auto startReadingLine = std::chrono::high_resolution_clock::now();
+        Studentas s(iss);
+        auto endReadingLine = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> readingLineTime = endReadingLine - startReadingLine;
+
+        if (s.galBalas() > 5) {
+            good_students.push_back(s);
+        } else {
+            studentai.push_back(s);
+        }
+    }
+    auto endReading = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> readingTime = endReading - startReading;
+
+  
+    std::cout << "Reading and comparisons time: " << readingTime.count() << " seconds" << std::endl;
+
+    file.close(); 
+    return 0;
 }
