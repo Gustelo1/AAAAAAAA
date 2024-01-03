@@ -29,14 +29,18 @@ std::istream& Studentas::readStudent(std::istream& is) {
 }
 
 int main() {
-  std::ifstream file("students_1000000.txt"); // Open the file
+  // Open the file
+  std::ifstream file("students_1000000.txt");
   if (!file.is_open()) {
     std::cerr << "Unable to open file students.txt" << std::endl;
     return 1;
   }
 
+
   std::vector<Studentas> studentai;
   std::vector<Studentas> good_students;
+
+  auto startReading = std::chrono::high_resolution_clock::now();
   std::string line;
   while (std::getline(file, line)) {
     std::istringstream iss(line);
@@ -47,12 +51,24 @@ int main() {
       studentai.push_back(s);
     }
   }
+  auto endReading = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> readingTime = endReading - startReading;
 
-  std::cout << "Good students:" << std::endl;
-  for (const auto& s : good_students) {
-    std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
-  }
+ 
+  file.close();
 
-  file.close(); // Close the file
+  std::cout << "Reading time: " << readingTime.count() << " seconds" << std::endl;
+
+
+
+
+  auto startSorting = std::chrono::high_resolution_clock::now();
+
+  auto endSorting = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> sortingTime = endSorting - startSorting;
+
+
+  std::cout << "Sorting time: " << sortingTime.count() << " seconds" << std::endl;
+
   return 0;
 }
