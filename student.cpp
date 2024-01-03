@@ -58,17 +58,5 @@ int main() {
   file.close();
 
   std::cout << "Reading time: " << readingTime.count() << " seconds" << std::endl;
-
-
-
-
-  auto startSorting = std::chrono::high_resolution_clock::now();
-
-  auto endSorting = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> sortingTime = endSorting - startSorting;
-
-
-  std::cout << "Sorting time: " << sortingTime.count() << " seconds" << std::endl;
-
   return 0;
 }
