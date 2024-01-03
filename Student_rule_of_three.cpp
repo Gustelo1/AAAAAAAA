@@ -96,10 +96,6 @@ int main() {
     std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
   }
 
-  std::cout << "Good students:" << std::endl;
-  for (const auto& s : good_students) {
-    std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
-  }
 
   file.close(); 
   return 0;
