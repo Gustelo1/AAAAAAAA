@@ -1,26 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include "mediana.h"
-#include <sstream>
-#include <algorithm>
 
-class Studentas {
-private:
-  std::string vardas_;
-  std::string pavarde_;
-  double egzaminas_;
-  std::vector<double> nd_;
+#include "Studentas.h"
 
-public:
-  Studentas() : egzaminas_(0) { }  // default konstruktorius
-  Studentas(std::istream& is);
-  inline std::string vardas() const { return vardas_; }    // get'eriai, inline
-  inline std::string pavarde() const { return pavarde_; }  // get'eriai, inline
-  double galBalas(double (*f) (std::vector<double>) = mediana) const;  // get'eriai
-  std::istream& readStudent(std::istream&);
-};
 
 Studentas::Studentas(std::istream& is) : egzaminas_(0) {
   readStudent(is);
@@ -48,12 +28,15 @@ std::istream& Studentas::readStudent(std::istream& is) {
   return is;
 }
 
+
 int main() {
   std::ifstream file("students_1000000.txt"); // Open the file
   if (!file.is_open()) {
     std::cerr << "Unable to open file students.txt" << std::endl;
     return 1;
   }
+
+  auto start_reading = std::chrono::high_resolution_clock::now();
 
   std::vector<Studentas> studentai;
   std::vector<Studentas> good_students;
@@ -68,15 +51,23 @@ int main() {
     }
   }
 
-  for (const auto& s : studentai) {
-    std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
-  }
+  auto end_reading = std::chrono::high_resolution_clock::now();
+  auto duration_reading = std::chrono::duration_cast<std::chrono::milliseconds>(end_reading - start_reading);
 
-  std::cout << "Good students:" << std::endl;
-  for (const auto& s : good_students) {
-    std::cout << s.vardas() << " " << s.pavarde() << " " << s.galBalas() << std::endl;
-  }
+  std::cout << "Reading time: " << duration_reading.count() << " milliseconds" << std::endl;
 
   file.close(); 
+
+
+  auto start_sorting = std::chrono::high_resolution_clock::now();
+  std::sort(studentai.begin(), studentai.end(), [](const Studentas& a, const Studentas& b) {
+    return a.galBalas() > b.galBalas(); 
+  });
+  auto end_sorting = std::chrono::high_resolution_clock::now();
+  auto duration_sorting = std::chrono::duration_cast<std::chrono::milliseconds>(end_sorting - start_sorting);
+
+  std::cout << "Sorting time: " << duration_sorting.count() << " milliseconds" << std::endl;
+
+
   return 0;
 }
