@@ -1,4 +1,5 @@
 # Unikas-CCC
+V0.2
 Prideta programa kurianti atsitiktinius pažymius studentams. Pažymių skaičius pasirenkamas prieš kuriant failus. Pridėta funkcija rušiuojanti studentus į "smart" ir "stupid" vektorius. Surušiuoti studentai išsaugomi į du skirtingus failus ir yra parodomas programos veikimo greitis.
 
 
