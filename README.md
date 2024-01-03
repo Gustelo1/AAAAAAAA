@@ -1,0 +1,1 @@
+Kodas patobulintas taip, kad būtų naudojamos dvi klasės: Žmogaus ir studento. Žmogaus klasė yra abstrakti, todėl žmogaus objektų kurti negalima. Kiekvienas žmogus yra aprašyomas ir jam yra išvedama studento klasė.
